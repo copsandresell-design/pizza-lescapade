@@ -1,0 +1,46 @@
+{
+  "name": "Pizza L'Escapade",
+  "short_name": "L'Escapade",
+  "description": "Commandez vos pizzas artisanales au feu de bois — pizzeria guinguette nature",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fdf6ec",
+  "theme_color": "#7a5c2e",
+  "lang": "fr",
+  "categories": ["food", "shopping"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "La carte",
+      "url": "/menu",
+      "description": "Voir et commander les pizzas"
+    },
+    {
+      "name": "Suivre ma commande",
+      "url": "/track",
+      "description": "Suivre l'état de ma commande"
+    }
+  ]
+}
