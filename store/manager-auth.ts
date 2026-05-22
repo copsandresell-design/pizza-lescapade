@@ -21,6 +21,18 @@ export const useManagerAuth = create<ManagerAuthStore>()(
       setHydrated: (v) => set({ _hydrated: v }),
 
       login: async (email, password) => {
+        // Fallback test-mode : si Supabase n'est pas configuré, on vérifie un mot de passe local
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+        const managerTestPwd = process.env.NEXT_PUBLIC_MANAGER_PASSWORD ?? 'gerant2024'
+
+        if (!supabaseUrl || supabaseUrl.includes('xxxx')) {
+          if (password === managerTestPwd) {
+            set({ isManagerLoggedIn: true, managerEmail: email || 'gerant@lescapade.fr' })
+            return { error: null }
+          }
+          return { error: 'Mot de passe incorrect' }
+        }
+
         const supabase = createClient()
         const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
