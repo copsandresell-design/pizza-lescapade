@@ -66,6 +66,22 @@ export default function OrderPage() {
       return
     }
 
+    // Vérifier disponibilité des pizzas avant commande
+    try {
+      const menuRes = await globalThis.fetch('/api/menu?available=true', { cache: 'no-store' })
+      if (menuRes.ok) {
+        const available: { id: string }[] = await menuRes.json()
+        const availableIds = new Set(available.map((p) => p.id))
+        const unavailable = items.filter((i) => !availableIds.has(i.pizzaId))
+        if (unavailable.length > 0) {
+          toast.error(`"${unavailable[0].nom}" n'est plus disponible. Retirez-le du panier pour continuer.`)
+          return
+        }
+      }
+    } catch {
+      // Si l'API échoue, on laisse passer (ne pas bloquer la commande)
+    }
+
     setFormData(data)
 
     // Lookup customer to determine if card is required
