@@ -8,7 +8,9 @@ import { useCart, selectTotal, selectCount } from '@/store/cart'
 import { formatPrix } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { PizzaCustomizationModal } from '@/components/menu/PizzaCustomizationModal'
-import { customizationSummary } from '@/store/supplements'
+import { AllergenInline } from '@/components/menu/AllergenBadge'
+import { customizationSummary, PIZZA_DEFAULT_INGREDIENTS } from '@/store/supplements'
+import { getAllergensForItem } from '@/store/allergens'
 import { PIZZAS } from '@/store/pizzas'
 import type { CartItem, PizzaCustomization } from '@/types'
 
@@ -76,6 +78,13 @@ export function CartDrawer() {
                         )
                       : null
                     const pizza = PIZZAS.find((p) => p.id === item.pizzaId)
+                    const allergenIds = pizza
+                      ? getAllergensForItem(
+                          pizza,
+                          item.customization?.supplements ?? [],
+                          PIZZA_DEFAULT_INGREDIENTS[pizza.id] ?? [],
+                        )
+                      : []
                     return (
                       <li
                         key={item.lineId}
@@ -96,6 +105,11 @@ export function CartDrawer() {
                               <p className="text-xs mt-0.5 leading-snug" style={{ color: '#9a7c4e' }}>
                                 {summary}
                               </p>
+                            )}
+                            {allergenIds.length > 0 && (
+                              <div className="mt-1">
+                                <AllergenInline allergenIds={allergenIds} />
+                              </div>
                             )}
                             <p className="text-sm font-bold mt-1" style={{ color: '#7a5c2e' }}>
                               {formatPrix(item.prix * item.quantite)}

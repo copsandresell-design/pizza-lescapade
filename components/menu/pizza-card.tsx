@@ -5,6 +5,9 @@ import { Plus, Settings2 } from 'lucide-react'
 import { useCart } from '@/store/cart'
 import { formatPrix } from '@/lib/utils'
 import { PizzaCustomizationModal } from './PizzaCustomizationModal'
+import { AllergenBadge } from './AllergenBadge'
+import { getAllergensForItem } from '@/store/allergens'
+import { PIZZA_DEFAULT_INGREDIENTS } from '@/store/supplements'
 import type { Pizza, PizzaCustomization } from '@/types'
 
 const CATEGORY_EMOJI: Record<string, string> = {
@@ -29,6 +32,9 @@ export function PizzaCard({ pizza }: PizzaCardProps) {
   const [modalOpen, setModalOpen] = useState(false)
 
   const hasCustomization = pizza.categorie === 'pizza' || pizza.categorie === 'incontournable'
+
+  const defaultIngredients = PIZZA_DEFAULT_INGREDIENTS[pizza.id] ?? []
+  const allergenIds = getAllergensForItem(pizza, [], defaultIngredients)
 
   const handleAdd = (customization: PizzaCustomization, prix: number, quantite: number) => {
     addItem({ pizzaId: pizza.id, nom: pizza.nom, prix, customization }, quantite)
@@ -69,7 +75,8 @@ export function PizzaCard({ pizza }: PizzaCardProps) {
               className="absolute top-2 left-2 rounded-full px-2 py-0.5 text-xs font-bold"
               style={{ backgroundColor: badge.bg, color: badge.color }}
             >
-              {CATEGORY_EMOJI[pizza.categorie]} {pizza.categorie === 'incontournable' ? 'Incontournable' : pizza.categorie === 'salade' ? 'Salade' : 'Panuzzi'}
+              {CATEGORY_EMOJI[pizza.categorie]}{' '}
+              {pizza.categorie === 'incontournable' ? 'Incontournable' : pizza.categorie === 'salade' ? 'Salade' : 'Panuzzi'}
             </span>
           )}
 
@@ -99,9 +106,16 @@ export function PizzaCard({ pizza }: PizzaCardProps) {
               {formatPrix(pizza.prix)}
             </span>
           </div>
-          <p className="text-xs leading-relaxed flex-1 mb-3" style={{ color: '#8a6a4e' }}>
+          <p className="text-xs leading-relaxed flex-1 mb-2" style={{ color: '#8a6a4e' }}>
             {pizza.desc}
           </p>
+
+          {/* Allergènes */}
+          {allergenIds.length > 0 && (
+            <div className="mb-3">
+              <AllergenBadge allergenIds={allergenIds} size="sm" />
+            </div>
+          )}
 
           {hasCustomization ? (
             <button

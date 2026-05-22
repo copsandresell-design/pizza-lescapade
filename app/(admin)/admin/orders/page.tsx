@@ -3,10 +3,29 @@ import { useEffect, useState, useCallback } from 'react'
 import { RefreshCw, Phone, Clock, ChefHat, CheckCircle, AlertCircle, Ban } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { AllergenInline } from '@/components/menu/AllergenBadge'
+import { getAllergensForItem, type AllergenId } from '@/store/allergens'
+import { PIZZA_DEFAULT_INGREDIENTS } from '@/store/supplements'
+import { MENU_ITEMS } from '@/store/pizzas'
 import { formatPrix, formatDate } from '@/lib/utils'
 import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/types'
 import type { Order, OrderStatus } from '@/types'
 import { toast } from 'sonner'
+
+function getOrderAllergens(order: Order): AllergenId[] {
+  const all = new Set<AllergenId>()
+  order.items.forEach((item) => {
+    const pizza = MENU_ITEMS.find((p) => p.id === item.pizzaId)
+    if (!pizza) return
+    const customization = (item as unknown as { customization?: { supplements?: string[] } }).customization
+    getAllergensForItem(
+      pizza,
+      customization?.supplements ?? [],
+      PIZZA_DEFAULT_INGREDIENTS[pizza.id] ?? [],
+    ).forEach((id) => all.add(id))
+  })
+  return Array.from(all)
+}
 
 const NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
   pending: 'confirmed',
@@ -221,6 +240,16 @@ export default function AdminOrdersPage() {
                   Note : {order.note}
                 </div>
               )}
+
+              {/* Allergènes */}
+              {(() => {
+                const ids = getOrderAllergens(order)
+                return ids.length > 0 ? (
+                  <div className="px-4 mb-3">
+                    <AllergenInline allergenIds={ids} />
+                  </div>
+                ) : null
+              })()}
 
               {/* Footer */}
               <div

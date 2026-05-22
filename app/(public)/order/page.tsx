@@ -14,6 +14,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
 import { CardStep } from '@/components/order/CardStep'
+import { AllergenSection } from '@/components/menu/AllergenBadge'
+import { getAllergensForItem, type AllergenId } from '@/store/allergens'
+import { PIZZA_DEFAULT_INGREDIENTS } from '@/store/supplements'
 import { PIZZAS } from '@/store/pizzas'
 import type { CustomerLookupResult } from '@/types'
 
@@ -287,6 +290,22 @@ export default function OrderPage() {
                 <span style={{ color: '#7a5c2e' }}>{formatPrix(total)}</span>
               </div>
             </div>
+
+            {/* Allergènes de la commande complète */}
+            {(() => {
+              const all = new Set<AllergenId>()
+              items.forEach((item) => {
+                const pizza = PIZZAS.find((p) => p.id === item.pizzaId)
+                if (!pizza) return
+                getAllergensForItem(
+                  pizza,
+                  item.customization?.supplements ?? [],
+                  PIZZA_DEFAULT_INGREDIENTS[pizza.id] ?? [],
+                ).forEach((id) => all.add(id))
+              })
+              const ids = Array.from(all)
+              return ids.length > 0 ? <AllergenSection allergenIds={ids} /> : null
+            })()}
           </div>
 
           {/* Right panel — form or card step */}

@@ -10,6 +10,7 @@ import {
   PIZZA_DEFAULT_INGREDIENTS,
   computePrice,
 } from '@/store/supplements'
+import { getAllergensForItem, ALLERGENS, type AllergenId } from '@/store/allergens'
 import { formatPrix } from '@/lib/utils'
 import type { Pizza } from '@/types'
 import type { PizzaSize, PizzaCustomization } from '@/types'
@@ -25,15 +26,21 @@ interface Props {
 export function PizzaCustomizationModal({ pizza, initial, initialQuantite = 1, onAdd, onClose }: Props) {
   const defaultIngredients = PIZZA_DEFAULT_INGREDIENTS[pizza.id] ?? []
 
-  const [size, setSize] = useState<PizzaSize>(initial?.size ?? DEFAULT_SIZE)
-  const [removed, setRemoved] = useState<string[]>(initial?.removedIngredients ?? [])
+  const [size, setSize]             = useState<PizzaSize>(initial?.size ?? DEFAULT_SIZE)
+  const [removed, setRemoved]       = useState<string[]>(initial?.removedIngredients ?? [])
   const [supplements, setSupplements] = useState<string[]>(initial?.supplements ?? [])
-  const [quantite, setQuantite] = useState(initialQuantite)
-  const [prix, setPrix] = useState(pizza.prix)
+  const [quantite, setQuantite]     = useState(initialQuantite)
+  const [prix, setPrix]             = useState(pizza.prix)
+  const [allergenIds, setAllergenIds] = useState<AllergenId[]>([])
 
   useEffect(() => {
     setPrix(computePrice(pizza.prix, size, supplements))
   }, [pizza.prix, size, supplements])
+
+  // Recalcul allergènes en temps réel à chaque changement de suppléments
+  useEffect(() => {
+    setAllergenIds(getAllergensForItem(pizza, supplements, defaultIngredients))
+  }, [pizza, supplements, defaultIngredients])
 
   const toggleIngredient = useCallback((name: string) => {
     setRemoved((prev) =>
@@ -104,18 +111,49 @@ export function PizzaCustomizationModal({ pizza, initial, initialQuantite = 1, o
             <div className="px-5 pb-2">
               {/* Nom + prix de base */}
               <div className="flex items-baseline justify-between mb-1">
-                <h2
-                  style={{ fontFamily: 'var(--font-dancing), cursive', fontSize: '1.8rem', color: '#2c1a0e' }}
-                >
+                <h2 style={{ fontFamily: 'var(--font-dancing), cursive', fontSize: '1.8rem', color: '#2c1a0e' }}>
                   {pizza.nom}
                 </h2>
                 <span className="text-sm font-semibold" style={{ color: '#9a7c4e' }}>
                   à partir de {formatPrix(pizza.prix)}
                 </span>
               </div>
-              <p className="text-xs leading-relaxed mb-5" style={{ color: '#8a6a4e' }}>
+              <p className="text-xs leading-relaxed mb-3" style={{ color: '#8a6a4e' }}>
                 {pizza.desc}
               </p>
+
+              {/* Allergènes — temps réel */}
+              {allergenIds.length > 0 && (
+                <div
+                  className="flex flex-wrap gap-1.5 rounded-xl px-3 py-2.5 mb-5"
+                  style={{ backgroundColor: 'rgba(255,140,0,0.07)', border: '1px solid rgba(255,140,0,0.2)' }}
+                >
+                  <span className="text-xs font-bold w-full" style={{ color: '#c06000' }}>
+                    ⚠️ Allergènes
+                  </span>
+                  {allergenIds.map((id) => {
+                    const a = ALLERGENS[id]
+                    const isNew = supplements.some((suppId) => {
+                      const existing = getAllergensForItem(pizza, [], defaultIngredients)
+                      return !existing.includes(id)
+                    })
+                    return (
+                      <span
+                        key={id}
+                        className="flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold"
+                        style={{
+                          backgroundColor: isNew ? 'rgba(255,100,0,0.15)' : 'rgba(255,140,0,0.10)',
+                          color: '#c06000',
+                          border: isNew ? '1px solid rgba(255,100,0,0.3)' : 'none',
+                        }}
+                        title={a.description}
+                      >
+                        {a.icon} {a.name}
+                      </span>
+                    )
+                  })}
+                </div>
+              )}
 
               {/* Taille */}
               <section className="mb-5">
