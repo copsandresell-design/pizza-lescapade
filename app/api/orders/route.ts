@@ -19,7 +19,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const { items, client, heureRetrait, modePaiement, note, stripePmId } = body
+  const { items, client, heureRetrait, modeRetrait, modePaiement, note, stripePmId } = body
 
   if (!items?.length || !client?.nom || !client?.telephone) {
     return NextResponse.json({ error: 'Données manquantes' }, { status: 400 })
@@ -40,6 +40,7 @@ export async function POST(req: Request) {
     modePaiement,
     note,
     heureRetrait,
+    modeRetrait,
     stripePaymentIntentId: stripePmId,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

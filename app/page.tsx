@@ -88,7 +88,7 @@ export default function Home() {
             Pizza L&apos;Escapade
           </h1>
           <p className="text-amber-100 text-lg mb-8 tracking-wide" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.6)" }}>
-            Pizzeria artisanale · Four à bois · Guinguette nature
+            Pizzeria artisanale · Guinguette nature
           </p>
           <div className="flex flex-col sm:flex-row gap-4 items-center">
             <a
@@ -122,7 +122,7 @@ export default function Home() {
             Nos spécialités
           </h2>
           <p className="text-center mb-12 text-sm tracking-widest uppercase" style={{ color: "#9a7c4e" }}>
-            Pâte à la farine artisanale · Cuisson au four à bois
+            Pâte artisanale · Ingrédients frais du marché
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -217,7 +217,7 @@ export default function Home() {
               <p className="text-sm leading-relaxed mb-4" style={{ color: "#6b5040" }}>
                 Chez L&apos;Escapade, chaque pizza commence par une pâte travaillée à la main, levée lentement
                 pour développer ses arômes. Les pâtons sont façonnés un à un, garnis avec générosité,
-                puis enfournés dans notre four à bois pour une cuisson à cœur.
+                puis enfournés à très haute température pour une cuisson à cœur.
               </p>
               <p className="text-sm leading-relaxed" style={{ color: "#6b5040" }}>
                 Pas de congélateur, pas de surgelé — seulement du frais, du local et du fait avec soin.
@@ -312,7 +312,7 @@ export default function Home() {
           07 80 98 81 77
         </a>
         <p className="mt-4 text-sm" style={{ color: "#9a7c4e" }}>
-          Pizzeria artisanale · Four à bois · Sur place & à emporter
+          Pizzeria artisanale · Ingrédients frais · Sur place & à emporter
         </p>
       </footer>
     </div>

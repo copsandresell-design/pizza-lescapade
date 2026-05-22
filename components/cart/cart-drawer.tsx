@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X, Minus, Plus, Trash2, ShoppingBag, Pencil } from 'lucide-react'
 import Link from 'next/link'
@@ -12,7 +13,7 @@ import { PIZZAS } from '@/store/pizzas'
 import type { CartItem, PizzaCustomization } from '@/types'
 
 export function CartDrawer() {
-  const { items, isOpen, setOpen, updateQuantite, removeItem, updateItem } = useCart()
+  const { items, isOpen, setOpen, updateQuantite, removeItem, updateItem, modeRetrait, setModeRetrait } = useCart()
   const total = useCart(selectTotal)
   const count = useCart(selectCount)
   const [editing, setEditing] = useState<CartItem | null>(null)
@@ -74,6 +75,7 @@ export function CartDrawer() {
                           item.customization.supplements
                         )
                       : null
+                    const pizza = PIZZAS.find((p) => p.id === item.pizzaId)
                     return (
                       <li
                         key={item.lineId}
@@ -81,6 +83,11 @@ export function CartDrawer() {
                         style={{ backgroundColor: '#fff8f0', border: '1px solid #e8d5b0' }}
                       >
                         <div className="flex items-start gap-3">
+                          {pizza?.image && (
+                            <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 mt-0.5">
+                              <Image src={pizza.image} alt={pizza.nom} fill className="object-cover" sizes="48px" />
+                            </div>
+                          )}
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-sm" style={{ color: '#2c1a0e' }}>
                               {item.nom}
@@ -144,6 +151,25 @@ export function CartDrawer() {
                 className="px-5 py-4 border-t flex flex-col gap-3 shrink-0"
                 style={{ borderColor: '#e8d5b0' }}
               >
+                {/* Mode retrait */}
+                {modeRetrait ? (
+                  <div className="flex items-center justify-between rounded-xl px-3 py-2" style={{ backgroundColor: '#f5e9d2', border: '1px solid #e8d5b0' }}>
+                    <span className="text-sm font-semibold" style={{ color: '#7a5c2e' }}>
+                      {modeRetrait === 'takeaway' ? '🛍️ À emporter' : '🪑 Sur place'}
+                    </span>
+                    <button
+                      onClick={() => setModeRetrait(null)}
+                      className="text-xs underline"
+                      style={{ color: '#9a7c4e' }}
+                    >
+                      Changer
+                    </button>
+                  </div>
+                ) : (
+                  <p className="text-xs text-center" style={{ color: '#9a7c4e' }}>
+                    Mode de retrait à choisir lors de la commande
+                  </p>
+                )}
                 <div className="flex items-center justify-between">
                   <span className="font-semibold" style={{ color: '#2c1a0e' }}>Total</span>
                   <span className="text-lg font-bold" style={{ color: '#7a5c2e' }}>

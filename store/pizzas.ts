@@ -9,6 +9,7 @@ export const PIZZAS: Pizza[] = [
     prix: 10,
     categorie: 'tomate',
     disponible: true,
+    image: '/pizza-lescapade-medias/pizzas/pizza-coeur.jpg',
   },
   {
     id: 'napolitaine',
@@ -18,6 +19,7 @@ export const PIZZAS: Pizza[] = [
     prix: 10,
     categorie: 'tomate',
     disponible: true,
+    image: '/pizza-lescapade-medias/pizzas/pizza-roquette-crue.jpg',
   },
   {
     id: 'jambon-mozza',
@@ -27,6 +29,7 @@ export const PIZZAS: Pizza[] = [
     prix: 11,
     categorie: 'tomate',
     disponible: true,
+    image: '/pizza-lescapade-medias/pizzas/pizza-jambon-burrata.jpg',
   },
   {
     id: 'alsacienne',
@@ -36,6 +39,7 @@ export const PIZZAS: Pizza[] = [
     prix: 12,
     categorie: 'creme',
     disponible: true,
+    image: '/pizza-lescapade-medias/pizzas/pizza-jambon-burrata-2.jpg',
   },
   {
     id: 'reine',
@@ -45,6 +49,7 @@ export const PIZZAS: Pizza[] = [
     prix: 12,
     categorie: 'tomate',
     disponible: true,
+    image: '/pizza-lescapade-medias/pizzas/pizza-parma-detail.jpg',
   },
   {
     id: '4-fromages',
@@ -73,6 +78,7 @@ export const PIZZAS: Pizza[] = [
     prix: 13,
     categorie: 'tomate',
     disponible: true,
+    image: '/pizza-lescapade-medias/pizzas/pizza-fleurs-roquette.jpg',
   },
   {
     id: 'bolognaise',
@@ -101,6 +107,7 @@ export const PIZZAS: Pizza[] = [
     prix: 13,
     categorie: 'tomate',
     disponible: true,
+    image: '/pizza-lescapade-medias/pizzas/pizza-fleurs-planche.jpg',
   },
   {
     id: 'poulet-curry',

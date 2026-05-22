@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import { Pencil, Check, X, ToggleLeft, ToggleRight } from 'lucide-react'
 import { formatPrix } from '@/lib/utils'
 import { PIZZAS } from '@/store/pizzas'
@@ -55,7 +56,7 @@ export default function PizzasPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ backgroundColor: '#2c1a0e', borderBottom: '1px solid #3a2010' }}>
-                {['Pizza', 'Catégorie', 'Prix', 'Disponible', ''].map((h) => (
+                {['', 'Pizza', 'Catégorie', 'Prix', 'Disponible', ''].map((h) => (
                   <th key={h} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider"
                     style={{ color: '#6b5040' }}>{h}</th>
                 ))}
@@ -71,6 +72,15 @@ export default function PizzasPage() {
                     opacity: pizza.disponible ? 1 : 0.5,
                   }}
                 >
+                  <td className="px-3 py-2 w-12">
+                    {pizza.image ? (
+                      <div className="relative w-10 h-10 rounded-lg overflow-hidden">
+                        <Image src={pizza.image} alt={pizza.nom} fill className="object-cover" sizes="40px" />
+                      </div>
+                    ) : (
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xl" style={{ backgroundColor: '#2c1a0e' }}>🍕</div>
+                    )}
+                  </td>
                   <td className="px-4 py-3">
                     <div>
                       <p className="font-semibold" style={{ color: '#fdf6ec' }}>{pizza.nom}</p>

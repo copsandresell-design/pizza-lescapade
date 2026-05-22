@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
 import { CardStep } from '@/components/order/CardStep'
+import { PIZZAS } from '@/store/pizzas'
 import type { CustomerLookupResult } from '@/types'
 
 const schema = z.object({
@@ -31,7 +33,7 @@ type Step = 'form' | 'card' | 'submitting'
 
 export default function OrderPage() {
   const router = useRouter()
-  const { items, updateQuantite, removeItem, clear } = useCart()
+  const { items, updateQuantite, removeItem, clear, modeRetrait, setModeRetrait } = useCart()
   const total = useCart(selectTotal)
   const [creneaux, setCreneaux] = useState<string[]>([])
   const [step, setStep] = useState<Step>('form')
@@ -57,6 +59,10 @@ export default function OrderPage() {
   const onFormSubmit = async (data: FormData) => {
     if (items.length === 0) {
       toast.error('Votre panier est vide')
+      return
+    }
+    if (!modeRetrait) {
+      toast.error('Veuillez choisir un mode de retrait')
       return
     }
 
@@ -97,6 +103,7 @@ export default function OrderPage() {
           })),
           client: { nom: data.nom, telephone: data.telephone },
           heureRetrait: data.heureRetrait,
+          modeRetrait,
           modePaiement: data.modePaiement,
           note: data.note,
           stripePmId: pmId,
@@ -198,8 +205,14 @@ export default function OrderPage() {
                         item.customization.supplements
                       )
                     : null
+                  const pizza = PIZZAS.find((p) => p.id === item.pizzaId)
                   return (
                     <li key={item.lineId} className="flex items-center gap-3 px-4 py-3">
+                      {pizza?.image && (
+                        <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0">
+                          <Image src={pizza.image} alt={pizza.nom} fill className="object-cover" sizes="40px" />
+                        </div>
+                      )}
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-sm" style={{ color: '#2c1a0e' }}>
                           {item.nom}
@@ -264,6 +277,34 @@ export default function OrderPage() {
           <div className="flex flex-col gap-5">
             {step === 'form' && (
               <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col gap-5">
+                {/* Mode de retrait */}
+                <div>
+                  <p className="text-sm font-semibold mb-3" style={{ color: '#2c1a0e' }}>
+                    Comment souhaitez-vous retirer votre commande ? *
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {([
+                      { value: 'takeaway', emoji: '🛍️', label: 'À EMPORTER', sub: 'Retrait rapide' },
+                      { value: 'dine_in',  emoji: '🪑', label: 'SUR PLACE',  sub: 'Dégustez en terrasse' },
+                    ] as const).map(({ value, emoji, label, sub }) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setModeRetrait(value)}
+                        className="flex flex-col items-center gap-2 rounded-2xl p-4 transition-all"
+                        style={{
+                          border: `2px solid ${modeRetrait === value ? '#7a5c2e' : '#e8d5b0'}`,
+                          backgroundColor: modeRetrait === value ? '#f5e9d2' : '#fff8f0',
+                        }}
+                      >
+                        <span style={{ fontSize: '2rem' }}>{emoji}</span>
+                        <span className="font-bold text-sm" style={{ color: '#2c1a0e' }}>{label}</span>
+                        <span className="text-xs" style={{ color: '#9a7c4e' }}>{sub}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <h2 className="font-semibold" style={{ color: '#2c1a0e' }}>
                   Vos informations
                 </h2>

@@ -62,6 +62,7 @@ export interface Order {
   modePaiement: PaymentMethod
   note?: string
   heureRetrait?: string
+  modeRetrait?: 'takeaway' | 'dine_in'
   stripePaymentIntentId?: string
   createdAt: string
   updatedAt: string

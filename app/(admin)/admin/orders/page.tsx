@@ -189,6 +189,18 @@ export default function AdminOrdersPage() {
                     <Clock size={12} /> {order.heureRetrait}
                   </div>
                 )}
+                {order.modeRetrait && (
+                  <div
+                    className="rounded-lg px-2 py-1 text-xs font-bold shrink-0"
+                    style={
+                      order.modeRetrait === 'takeaway'
+                        ? { backgroundColor: '#14532d', color: '#4ade80' }
+                        : { backgroundColor: '#1e3a5f', color: '#60a5fa' }
+                    }
+                  >
+                    {order.modeRetrait === 'takeaway' ? '🛍️ À emporter' : '🪑 Sur place'}
+                  </div>
+                )}
               </div>
 
               {/* Items */}

@@ -1,7 +1,7 @@
 {
   "name": "Pizza L'Escapade",
   "short_name": "L'Escapade",
-  "description": "Commandez vos pizzas artisanales au feu de bois — pizzeria guinguette nature",
+  "description": "Commandez vos pizzas artisanales, ingrédients frais — pizzeria guinguette nature",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

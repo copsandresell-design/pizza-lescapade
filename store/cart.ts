@@ -4,14 +4,18 @@ import { persist } from 'zustand/middleware'
 import { generateId } from '@/lib/utils'
 import type { CartItem, PizzaCustomization } from '@/types'
 
+export type ModeRetrait = 'takeaway' | 'dine_in'
+
 interface CartStore {
   items: CartItem[]
   isOpen: boolean
+  modeRetrait: ModeRetrait | null
 
   addItem: (item: Omit<CartItem, 'lineId' | 'quantite'>, quantite?: number) => void
   updateItem: (lineId: string, prix: number, customization: PizzaCustomization) => void
   removeItem: (lineId: string) => void
   updateQuantite: (lineId: string, quantite: number) => void
+  setModeRetrait: (mode: ModeRetrait | null) => void
   clear: () => void
   setOpen: (open: boolean) => void
 }
@@ -21,6 +25,7 @@ export const useCart = create<CartStore>()(
     (set, get) => ({
       items: [],
       isOpen: false,
+      modeRetrait: null,
 
       addItem: (item, quantite = 1) => {
         set((s) => ({
@@ -52,7 +57,8 @@ export const useCart = create<CartStore>()(
         }))
       },
 
-      clear: () => set({ items: [] }),
+      setModeRetrait: (mode) => set({ modeRetrait: mode }),
+      clear: () => set({ items: [], modeRetrait: null }),
       setOpen: (open) => set({ isOpen: open }),
     }),
     { name: 'pizza-cart' }
