@@ -3,18 +3,19 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import {
-  LayoutDashboard, ClipboardList, Package, Pizza, BarChart2, Bell,
+  LayoutDashboard, ClipboardList, Package, UtensilsCrossed, BarChart2, Bell, Layers,
   LogOut, ArrowLeft, Menu, X,
 } from 'lucide-react'
 import { useManagerAuth } from '@/store/manager-auth'
 
 const NAV = [
-  { href: '/admin/dashboard',       label: 'Dashboard',      icon: LayoutDashboard },
-  { href: '/admin/orders',          label: 'Commandes',      icon: ClipboardList   },
-  { href: '/admin/inventory',       label: 'Stock',          icon: Package         },
-  { href: '/admin/pizzas',          label: 'Pizzas',         icon: Pizza           },
-  { href: '/admin/stats',           label: 'Statistiques',   icon: BarChart2       },
-  { href: '/admin/notifications',   label: 'Notifications',  icon: Bell            },
+  { href: '/admin/dashboard',     label: 'Dashboard',      icon: LayoutDashboard  },
+  { href: '/admin/orders',        label: 'Commandes',      icon: ClipboardList    },
+  { href: '/admin/pizzas',        label: 'La carte',       icon: UtensilsCrossed  },
+  { href: '/admin/supplements',   label: 'Suppléments',    icon: Layers           },
+  { href: '/admin/inventory',     label: 'Stock',          icon: Package          },
+  { href: '/admin/stats',         label: 'Statistiques',   icon: BarChart2        },
+  { href: '/admin/notifications', label: 'Notifications',  icon: Bell             },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

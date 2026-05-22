@@ -2,13 +2,22 @@
 // EXISTING TYPES
 // ============================================================================
 
+export type MenuCategory = 'pizza' | 'incontournable' | 'salade' | 'panuzzi'
+
+export const MENU_CATEGORY_LABELS: Record<MenuCategory, string> = {
+  pizza:          'Pizzas',
+  incontournable: 'Incontournables',
+  salade:         'Salades',
+  panuzzi:        'Panuozzi',
+}
+
 export interface Pizza {
   id: string
   slug: string
   nom: string
   desc: string
   prix: number
-  categorie: 'tomate' | 'creme' | 'speciale'
+  categorie: MenuCategory
   disponible: boolean
   image?: string
   populaire?: boolean
