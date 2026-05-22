@@ -29,7 +29,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Pizza L'Escapade",
   description:
-    "Pizzeria artisanale, pâte maison et ingrédients frais, dans une ambiance guinguette nature. Commandez en ligne ou appelez le 07 80 98 81 77.",
+    "Pizzeria artisanale, pâte maison, dans une ambiance chaleureuse. Commandez en ligne ou appelez le 07 80 98 81 77.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

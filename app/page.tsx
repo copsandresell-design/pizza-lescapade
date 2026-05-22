@@ -88,7 +88,7 @@ export default function Home() {
             Pizza L&apos;Escapade
           </h1>
           <p className="text-amber-100 text-lg mb-8 tracking-wide" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.6)" }}>
-            Pizzeria artisanale · Guinguette nature
+            Pizzeria artisanale
           </p>
           <div className="flex flex-col sm:flex-row gap-4 items-center">
             <a
@@ -122,7 +122,7 @@ export default function Home() {
             Nos spécialités
           </h2>
           <p className="text-center mb-12 text-sm tracking-widest uppercase" style={{ color: "#9a7c4e" }}>
-            Pâte artisanale · Ingrédients frais du marché
+            Pâte artisanale · Saveurs authentiques
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -166,7 +166,7 @@ export default function Home() {
             L&apos;ambiance
           </h2>
           <p className="text-center mb-4 text-sm tracking-widest uppercase" style={{ color: "#9a7c4e" }}>
-            Guinguette nature · Terrasse · Concerts live
+            Terrasse · Concerts live
           </p>
           <p className="text-center text-sm leading-relaxed mb-10 max-w-xl mx-auto" style={{ color: "#6b5040" }}>
             Niché dans un écrin de verdure, L&apos;Escapade vous accueille le midi et le soir dans une guinguette chaleureuse.
@@ -212,7 +212,7 @@ export default function Home() {
                 Du pétrin au four
               </h2>
               <p className="text-xs tracking-widest uppercase mb-5" style={{ color: "#9a7c4e" }}>
-                Tout fait maison · Farine artisanale
+                Tout fait maison · Saveur authentique
               </p>
               <p className="text-sm leading-relaxed mb-4" style={{ color: "#6b5040" }}>
                 Chez L&apos;Escapade, chaque pizza commence par une pâte travaillée à la main, levée lentement
@@ -266,7 +266,7 @@ export default function Home() {
                 La carte
               </h2>
               <p className="text-xs tracking-widest uppercase mb-8" style={{ color: "#9a7c4e" }}>
-                +1 € par ingrédient supplémentaire
+                Supplément à la carte
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5">
@@ -312,7 +312,7 @@ export default function Home() {
           07 80 98 81 77
         </a>
         <p className="mt-4 text-sm" style={{ color: "#9a7c4e" }}>
-          Pizzeria artisanale · Ingrédients frais · Sur place & à emporter
+          Pizzeria artisanale · Sur place & à emporter
         </p>
       </footer>
     </div>

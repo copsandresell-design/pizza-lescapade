@@ -36,7 +36,7 @@ export default function MenuPage() {
           La carte
         </h1>
         <p className="text-sm tracking-widest uppercase" style={{ color: '#9a7c4e' }}>
-          Pâte artisanale · Ingrédients frais · +1 € par ingrédient supplémentaire
+          Pâte artisanale · Saveurs authentiques
         </p>
       </div>
 
