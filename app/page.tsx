@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { InstallButton } from "@/components/pwa/install-button";
+import { NotificationBanner } from "@/components/notifications/NotificationBanner";
+import { SpecialesSection } from "@/components/notifications/SpecialesSection";
 
 const LOGO = "/pizza-lescapade-medias/identite/logo-rond-lescapade.jpg";
 
@@ -62,6 +64,9 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-full" style={{ fontFamily: "var(--font-lato), Lato, sans-serif", backgroundColor: "#fdf6ec", color: "#2c1a0e" }}>
 
+      {/* ── BANNEAU NOTIFICATIONS ── */}
+      <NotificationBanner />
+
       {/* ── HERO ── */}
       <section className="relative w-full" style={{ minHeight: "520px" }}>
         <Image
@@ -103,6 +108,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── À LA UNE ── */}
+      <SpecialesSection />
 
       {/* ── NOS SPÉCIALITÉS ── */}
       <section className="py-16 px-6" style={{ backgroundColor: "#fdf6ec" }}>

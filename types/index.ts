@@ -296,3 +296,55 @@ export interface CustomerLookupResult {
 }
 
 export const CARD_REQUIRED_THRESHOLD = 3
+
+// ============================================================================
+// MODULE 7: NOTIFICATIONS
+// ============================================================================
+
+export type NotificationType = 'promo' | 'pizza' | 'event' | 'reminder'
+export type NotificationChannel = 'email' | 'push' | 'inapp' | 'sms'
+export type NotificationAudience = 'all' | 'vip' | 'regulars' | 'inactive'
+
+export interface AppNotification {
+  id: string
+  title: string
+  description: string
+  image?: string
+  type: NotificationType
+  startDate: string
+  endDate: string
+  channels: NotificationChannel[]
+  targetAudience: NotificationAudience
+  sentCount: number
+  active: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export const NOTIFICATION_TYPE_LABELS: Record<NotificationType, string> = {
+  promo:    'Promo',
+  pizza:    'Pizza du moment',
+  event:    'Soirée',
+  reminder: 'Rappel',
+}
+
+export const NOTIFICATION_TYPE_COLORS: Record<NotificationType, string> = {
+  promo:    '#d4a843',
+  pizza:    '#f97316',
+  event:    '#3b82f6',
+  reminder: '#6b7280',
+}
+
+export const NOTIFICATION_CHANNEL_LABELS: Record<NotificationChannel, string> = {
+  email: 'Email',
+  push:  'Push',
+  inapp: 'In-app',
+  sms:   'SMS',
+}
+
+export const NOTIFICATION_AUDIENCE_LABELS: Record<NotificationAudience, string> = {
+  all:      'Tous les clients',
+  vip:      'VIP (5+ commandes)',
+  regulars: 'Réguliers (30 jours)',
+  inactive: 'Inactifs (60+ jours)',
+}
