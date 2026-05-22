@@ -3,7 +3,8 @@ import { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/store/auth'
 
-const PUBLIC_PATHS = ['/login']
+// /admin has its own Supabase auth — exclude it from the test-password gate
+const PUBLIC_PATHS = ['/login', '/admin']
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, _hasHydrated } = useAuth()
